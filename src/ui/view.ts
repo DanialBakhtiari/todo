@@ -100,11 +100,11 @@ function shell(): string {
               <label for="q-title">عنوان کار</label>
               <input id="q-title" name="title" type="text" required maxlength="200" autocomplete="off" placeholder="مثلاً: تمرین جاوااسکریپت" />
             </div>
-            <div class="grid grid-cols-2 gap-3">
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <div class="field"><label for="q-due">موعد</label><input id="q-due" name="dueDate" type="date" /></div>
               <div class="field"><label for="q-priority">اولویت</label><select id="q-priority" name="priority">${priorityAddOptions()}</select></div>
             </div>
-            <div class="grid grid-cols-2 gap-3">
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
               <div class="field"><label for="q-cat">دسته</label><select id="q-cat" name="categoryId" data-ref="add-cat">${catOptions('', false)}</select></div>
               <div class="field"><label for="q-color">رنگ</label><input id="q-color" name="color" type="color" value="#6366f1" class="h-10 p-1" /></div>
             </div>
