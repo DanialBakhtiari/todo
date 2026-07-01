@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+    <!-- Prevent theme flash: apply saved/system theme before first paint -->
+    <script>
+      (function () {
+        try {
+          var raw = localStorage.getItem('mytasks:data:v2');
+          var pref = raw ? JSON.parse(raw).settings.theme : 'system';
+          var dark =
+            pref === 'dark' ||
+            (pref !== 'light' &&
+              window.matchMedia('(prefers-color-scheme: dark)').matches);
+          document.documentElement.dataset.theme = dark ? 'dark' : 'light';
+        } catch (e) {
+          document.documentElement.dataset.theme = window.matchMedia(
+            '(prefers-color-scheme: dark)',
+          ).matches
+            ? 'dark'
+            : 'light';
+        }
+      })();
+    </script>
+
+    <!-- Primary SEO -->
+    <title>لیست کارهای من | مدیریت وظایف و برنامه‌ریزی روزانه با تقویم شمسی</title>
+    <meta
+      name="description"
+      content="لیست کارها و مدیریت وظایف فارسی با تقویم شمسی (جلالی)، اولویت‌بندی، دسته‌بندی و یادآوری. سریع، خصوصی و آفلاین — نصب‌شدنی روی موبایل و دسکتاپ."
+    />
+    <meta name="author" content="دانیال بختیاری" />
+    <meta name="theme-color" content="#0b0b12" />
+    <link rel="canonical" href="https://tools.danialbakhtiari.com/todo/" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fa_IR" />
+    <meta property="og:site_name" content="لیست کارهای من" />
+    <meta property="og:title" content="لیست کارهای من — برنامه‌ریز روزانه با تقویم شمسی" />
+    <meta
+      property="og:description"
+      content="مدیریت وظایف روزانه؛ سریع، خصوصی و آفلاین، با تقویم شمسی، اولویت و یادآوری."
+    />
+    <meta property="og:url" content="https://tools.danialbakhtiari.com/todo/" />
+    <meta property="og:image" content="https://tools.danialbakhtiari.com/todo/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="لیست کارهای من — برنامه‌ریز روزانه با تقویم شمسی" />
+    <meta
+      name="twitter:description"
+      content="مدیریت وظایف روزانه؛ سریع، خصوصی و آفلاین، با تقویم شمسی."
+    />
+    <meta name="twitter:image" content="https://tools.danialbakhtiari.com/todo/og-image.png" />
+
+    <!-- iOS PWA -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="کارهای من" />
+
+    <!-- Structured data: WebApplication -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "لیست کارهای من",
+        "inLanguage": "fa-IR",
+        "applicationCategory": "ProductivityApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript",
+        "url": "https://tools.danialbakhtiari.com/todo/",
+        "description": "برنامه‌ریز و لیست کارهای فارسی با تقویم شمسی؛ سریع، خصوصی و آفلاین.",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IRR" },
+        "author": {
+          "@type": "Person",
+          "name": "دانیال بختیاری",
+          "alternateName": "Danial Bakhtiari",
+          "url": "https://danialbakhtiari.com",
+          "sameAs": ["https://github.com/danialbakhtiari"]
+        },
+        "creator": {
+          "@type": "Person",
+          "name": "دانیال بختیاری",
+          "url": "https://danialbakhtiari.com"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="app" aria-busy="true">
+      <!-- Static shell: real content for crawlers + no-JS, replaced on mount -->
+      <div class="mx-auto max-w-5xl p-6">
+        <h1 class="text-3xl font-extrabold">لیست کارهای من</h1>
+        <p class="mt-2 text-muted">
+          برنامه‌ریز روزانه‌ی فارسی با تقویم شمسی (جلالی)، اولویت‌بندی، دسته‌بندی و
+          یادآوری — سریع، خصوصی و آفلاین.
+        </p>
+        <div class="skeleton mt-6 h-40 w-full"></div>
+        <div class="skeleton mt-4 h-24 w-full"></div>
+      </div>
+    </div>
+
+    <noscript>
+      <div style="max-width: 42rem; margin: 2rem auto; padding: 1rem; text-align: center">
+        این برنامه برای کار کردن به JavaScript نیاز دارد. لطفاً آن را در مرورگر خود
+        فعال کنید.
+      </div>
+    </noscript>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
