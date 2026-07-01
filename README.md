@@ -82,6 +82,22 @@ public/       logo.svg, robots.txt, sitemap.xml, og-image.png (generated)
   If you move domains, also update the absolute URLs in `index.html`
   (canonical/OG), `public/robots.txt` and `public/sitemap.xml`.
 
+### Automatic deploy (CI/CD)
+
+`.github/workflows/deploy.yml` builds and uploads the site to the host over FTPS
+on every push to `main` — no manual build/zip/upload. Add these under **GitHub →
+repo Settings → Secrets and variables → Actions → New repository secret**:
+
+| Secret | Value |
+| --- | --- |
+| `FTP_SERVER` | FTP host, e.g. `ftp.danialbakhtiari.com` |
+| `FTP_USERNAME` | FTP account username |
+| `FTP_PASSWORD` | FTP account password |
+| `FTP_SERVER_DIR` | Remote path ending in `/`, e.g. `/public_html/todo/` |
+
+Then `git push` — the Actions tab shows the build and deploy. (If the host has no
+FTPS, change `protocol: ftps` to `ftp` in the workflow.)
+
 ## 💾 Data & privacy
 
 All data lives in your browser under the `mytasks:data:v2` key. Data from the
