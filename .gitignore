@@ -1,0 +1,14 @@
+node_modules
+dist
+dev-dist
+coverage
+*.local
+.env
+.env.*
+.DS_Store
+Thumbs.db
+
+# Local tooling / working notes — not part of the published project
+.claude/
+MASTER_PROMPT.md
+PROGRESS.md

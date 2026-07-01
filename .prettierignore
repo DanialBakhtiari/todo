@@ -1,0 +1,9 @@
+dist
+dev-dist
+coverage
+node_modules
+package-lock.json
+public/pwa-*.png
+public/apple-touch-icon-*.png
+public/maskable-*.png
+public/favicon.ico
