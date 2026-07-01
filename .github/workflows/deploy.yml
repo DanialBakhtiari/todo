@@ -1,18 +1,22 @@
-name: Build & Deploy
+name: Build & Publish
 
-# Runs on every push to main (and can be triggered manually).
+# On every push to main: build the site and publish ONLY the built output
+# (dist/) to the `deploy` branch. The host then clones/pulls that branch, so it
+# serves the built files — never the source.
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
-# Never let two deploys overlap.
+permissions:
+  contents: write # allow pushing to the deploy branch
+
 concurrency:
-  group: deploy-${{ github.ref }}
+  group: publish-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  build-and-publish:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -36,14 +40,15 @@ jobs:
           # Must match the sub-path the app is served from on the host.
           VITE_BASE: /todo/
 
-      # Uploads only the built site (dist/) to the host over FTPS, syncing
-      # incrementally so unchanged files are skipped.
-      - name: Deploy to host over FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Publish dist to the deploy branch
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          local-dir: ./dist/
-          server-dir: ${{ secrets.FTP_SERVER_DIR }}
+          branch: deploy
+          folder: dist
+          clean: true
+          # Append commits (no force-push) so the host can fast-forward
+          # `git pull` / cPanel "Update from Remote" without conflicts.
+          force: false
+          git-config-name: Danial Bakhtiari
+          git-config-email: danialbekhtiari@gmail.com
+          commit-message: 'deploy build ${{ github.sha }}'

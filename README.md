@@ -84,19 +84,28 @@ public/       logo.svg, robots.txt, sitemap.xml, og-image.png (generated)
 
 ### Automatic deploy (CI/CD)
 
-`.github/workflows/deploy.yml` builds and uploads the site to the host over FTPS
-on every push to `main` — no manual build/zip/upload. Add these under **GitHub →
-repo Settings → Secrets and variables → Actions → New repository secret**:
+`.github/workflows/deploy.yml` builds on every push to `main` and publishes **only
+the built site** to a separate `deploy` branch (its root is the contents of
+`dist/`). The host serves that branch, so no source or build tooling ever lives on
+the host — no manual build/zip/upload.
 
-| Secret | Value |
-| --- | --- |
-| `FTP_SERVER` | FTP host, e.g. `ftp.danialbakhtiari.com` |
-| `FTP_USERNAME` | FTP account username |
-| `FTP_PASSWORD` | FTP account password |
-| `FTP_SERVER_DIR` | Remote path ending in `/`, e.g. `/public_html/todo/` |
+**One-time host setup** (cPanel Git Version Control or terminal):
 
-Then `git push` — the Actions tab shows the build and deploy. (If the host has no
-FTPS, change `protocol: ftps` to `ftp` in the workflow.)
+```bash
+# in the parent of the web folder for tools.danialbakhtiari.com
+git clone -b deploy --single-branch https://github.com/danialbakhtiari/todo.git todo
+```
+
+`todo/` now holds just the built site. To update after a push:
+
+```bash
+cd todo && git pull
+```
+
+Or in cPanel → **Git Version Control**: clone the repo into the `todo` path, set the
+checked-out branch to `deploy`, then **Update from Remote**. The repo can be public;
+for a private repo, add a read-only deploy key on the host. A shipped `.htaccess`
+hides the clone's `.git`, gzips text, and sets PWA-correct caching.
 
 ## 💾 Data & privacy
 
