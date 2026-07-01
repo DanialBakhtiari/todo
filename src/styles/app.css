@@ -246,6 +246,8 @@
     font-weight: 600;
     line-height: 1.6;
     border: 1px solid transparent;
+    max-width: 100%;
+    overflow-wrap: anywhere;
   }
 
   .field {
@@ -267,7 +269,11 @@
   .field textarea,
   .input {
     width: 100%;
-    padding: 0.55rem 0.75rem;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    padding-block: 0.55rem;
+    padding-inline: 0.75rem;
     border-radius: 12px;
     border: 1px solid var(--color-line);
     background: var(--bg-base);
@@ -318,6 +324,51 @@
     background-size: 1rem;
     padding-inline-end: 2.5rem;
     cursor: pointer;
+  }
+
+  /* Date/time inputs: iOS/WebKit give these a large intrinsic min-width and
+     ignore width:100%, so they overflow their box. `appearance: none` makes
+     them respect the box model. A calendar icon (physical-left, RTL) provides
+     the affordance, and the native picker indicator is stretched invisibly over
+     the whole field so tapping anywhere opens the OS picker. */
+  .field input[type='date'],
+  .field input[type='datetime-local'] {
+    position: relative;
+    -webkit-appearance: none;
+    appearance: none;
+    min-height: 2.6rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%238b8b9a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect width='18' height='18' x='3' y='4' rx='2'/%3E%3Cpath d='M3 10h18M8 2v4M16 2v4'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: left 0.85rem center;
+    background-size: 1.05rem;
+    /* Physical padding: date inputs honor this (they ignore padding-inline-end
+       due to their shadow DOM). Reserves the left gutter for the icon so the
+       value can never sit under it, regardless of value alignment. */
+    padding-left: 2.5rem;
+    padding-right: 0.75rem;
+    cursor: pointer;
+  }
+  .field input[type='date']::-webkit-calendar-picker-indicator,
+  .field input[type='datetime-local']::-webkit-calendar-picker-indicator {
+    position: absolute;
+    inset: 0;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+  /* Keep the displayed value from stretching the field (iOS) and align it. */
+  .field input[type='date']::-webkit-date-and-time-value,
+  .field input[type='datetime-local']::-webkit-date-and-time-value {
+    text-align: start;
+    min-width: 0;
+    margin: 0;
+  }
+  .field input[type='date']::-webkit-inner-spin-button,
+  .field input[type='datetime-local']::-webkit-inner-spin-button {
+    display: none;
   }
 
   .skeleton {

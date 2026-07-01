@@ -66,7 +66,7 @@ export function renderTaskCard(task: Task, category: Category | undefined, dragg
   }
 
   const notes = task.notes
-    ? `<p class="mt-1 line-clamp-2 text-sm text-muted">${esc(task.notes)}</p>`
+    ? `<p class="mt-1 line-clamp-2 [overflow-wrap:anywhere] text-sm text-muted">${esc(task.notes)}</p>`
     : '';
 
   const handle = draggable
@@ -83,7 +83,7 @@ export function renderTaskCard(task: Task, category: Category | undefined, dragg
         ${done ? 'checked' : ''} data-action="toggle" data-id="${esc(task.id)}"
         aria-label="علامت انجام برای ${esc(task.title)}" />
       <div class="min-w-0 flex-1">
-        <p class="font-semibold ${done ? 'text-muted line-through' : ''}">${esc(task.title)}</p>
+        <p class="font-semibold [overflow-wrap:anywhere] ${done ? 'text-muted line-through' : ''}">${esc(task.title)}</p>
         ${notes}
         <div class="mt-2 flex flex-wrap items-center gap-1.5">${meta.join('')}</div>
       </div>
