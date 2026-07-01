@@ -1,0 +1,5 @@
+# Technical SEO for a single-page PWA.
+User-agent: *
+Allow: /
+
+Sitemap: https://tools.danialbakhtiari.com/todo/sitemap.xml
